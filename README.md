@@ -104,8 +104,8 @@ client.stopListening();
 ### Refresh an expired channel
 
 ```ts
-// Channel URIs expire after ~30 days.
-// Call refreshChannel() on startup or when nearing expiry.
+// Channel URIs have a limited lifetime (check `channel.expiresAt` for the exact expiry).
+// Call refreshChannel() on startup or when the channel is nearing its expiry.
 const newChannel = await client.refreshChannel();
 ```
 
@@ -148,7 +148,7 @@ const client = new WNSClient({ powershellPath: 'C:\\Windows\\System32\\WindowsPo
 ```ts
 interface WNSChannel {
   uri: string;       // The channel URI to give to your backend
-  expiresAt: string; // ISO 8601 expiry timestamp (~30 days from creation)
+  expiresAt: string; // ISO 8601 expiry timestamp – check this field for the exact expiry
 }
 
 interface WNSNotification {
