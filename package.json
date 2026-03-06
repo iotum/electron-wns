@@ -1,6 +1,6 @@
 {
   "name": "electron-wns",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Library for receiving Windows Push Notification Service (WNS) push messages in Electron apps",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
