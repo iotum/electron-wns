@@ -7,6 +7,7 @@ use this library to obtain a channel URI (with an included token), that could be
 push messages to.
 
 - Tested with Electron 32.2.4, but probably will work with most modern versions of electron (and node)
+- Tested by launching in a packaged, and code signed context via a .MSIX installer (see https://www.electronforge.io/config/makers/msix)
 
 - Library is actively being improved!
 
