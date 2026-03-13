@@ -87,6 +87,12 @@ export default Assets;
 }
 ```
 
+## TO COME:
+- Typescript types
+- Improving the way the library is integrated into your app - so that you can npm install, and access via a javascript wrapper
+- electron rebuild support that automatically would detect your version of electron (electron rebuild)
+- Typescript types/etc.
+
 ## An Alternative Library:
 - There is a more general NodeRT project out there: https://github.com/NodeRT/NodeRT
 - But this is overly complex, and seems to outdated and does not compile against more modern versions of node/electron
