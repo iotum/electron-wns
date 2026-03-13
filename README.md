@@ -1,16 +1,18 @@
 # electron-wns
 
-Node native addon for Windows Push Notifications Services (WNS) in Electron.
+Node native addon that allows you to receive push messages from Windows Push Notifications Services (WNS), in Electron (and node).
 
 - Currently in an initial state of development, but so far I have been able to successfully
 use this library to obtain a channel URI (with an included token), that could be used to send WNS
 push messages to.
 
+- Tested with Electron 32.2.4, but probably will work with most modern versions of electron (and node)
+
 - Library is actively being improved!
 
 ## USAGE
 
-1. Close this repo
+1. Clone this repo
 2. npm install
 3. npm run build (change the Electron version in package.json to match the version of electron your working with)
 4. Copy the built electron_wns.node into your electron project.
@@ -84,3 +86,7 @@ export default Assets;
   headers: Record<string, string> // populated for raw notifications
 }
 ```
+
+## An Alternative Library:
+- There is a more general NodeRT project out there: https://github.com/NodeRT/NodeRT
+- But this is overly complex, and seems to outdated and does not compile against more modern versions of node/electron
