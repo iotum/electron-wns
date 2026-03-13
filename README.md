@@ -94,5 +94,5 @@ export default Assets;
 - Typescript types/etc.
 
 ## An Alternative Library:
-- There is a more general NodeRT project out there: https://github.com/NodeRT/NodeRT
-- But this is overly complex, and seems to outdated and does not compile against more modern versions of node/electron
+- There is the NodeRT project: https://github.com/NodeRT/NodeRT
+- But that is currently very outdated and does not compile against more modern versions of node/electron
