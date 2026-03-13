@@ -74,12 +74,25 @@ export default Assets;
 
 ## Exposed API of electron_wns.node:
 
-- `getChannel(): Promise<{ uri: string; expirationTicks: number }>`
-- `startForegroundNotifications(callback: (notification) => void): void`
-- `stopForegroundNotifications(): void`
+### getChannel
+Call this to get a channel URI, that you can then send to your backend, and use to push messages to the user:
+```
+getChannel(): Promise<{ uri: string; expirationTicks: number }>
+```
 
-## Structure of Received Notifications
+Returns an object with:
+- uri: string usually of the form: https://wns2-bl2p.notify.windows.com/?token=<STRING>
+- expirationTicks: integer number of ticks since the epock, indicating when this channel expires.
 
+### startForegroundNotifications
+Starts listening for foreground notifications (notifications while the app is running).
+The callback function will be invoked by the library passing the received notification object.
+
+```
+startForegroundNotifications(callback: (notification) => void): void
+```
+
+The notification object will have the following structure:
 ```js
 {
   type: 'raw' | 'toast' | 'tile' | 'badge' | 'unknown',
@@ -88,8 +101,12 @@ export default Assets;
 }
 ```
 
+### stopForegroundNotifications
+```
+stopForegroundNotifications(): void
+```
+
 ## TO COME:
-- Typescript types
 - Improving the way the library is integrated into your app - so that you can npm install, and access via a javascript wrapper
 - electron rebuild support that automatically would detect your version of electron (electron rebuild)
 - Typescript types/etc.
