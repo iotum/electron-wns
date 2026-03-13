@@ -1,6 +1,6 @@
 {
   "name": "electron-wns",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Native Node addon for WNS channel creation and foreground notification listening",
   "main": "index.js",
   "scripts": {
