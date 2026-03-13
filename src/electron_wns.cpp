@@ -66,7 +66,15 @@ class GetChannelWorker : public Napi::AsyncWorker {
 };
 
 void EnsureApartmentInitialized() {
-  std::call_once(g_apartmentInitFlag, []() { winrt::init_apartment(winrt::apartment_type::multi_threaded); });
+  std::call_once(g_apartmentInitFlag, []() {
+    try {
+      winrt::init_apartment(winrt::apartment_type::multi_threaded);
+    } catch (const winrt::hresult_error& error) {
+      if (error.code() != RPC_E_CHANGED_MODE) {
+        throw;
+      }
+    }
+  });
 }
 
 std::string ToUtf8(std::wstring const& input) {
@@ -227,7 +235,15 @@ Napi::Value StopForegroundNotificationsWrapped(const Napi::CallbackInfo& info) {
 }
 
 Napi::Object Initialize(Napi::Env env, Napi::Object exports) {
-  EnsureApartmentInitialized();
+  try {
+    EnsureApartmentInitialized();
+  } catch (const winrt::hresult_error& error) {
+    Napi::Error::New(env, ToUtf8(error.message())).ThrowAsJavaScriptException();
+    return exports;
+  } catch (const std::exception& error) {
+    Napi::Error::New(env, error.what()).ThrowAsJavaScriptException();
+    return exports;
+  }
 
   exports.Set("getChannel", Napi::Function::New(env, GetChannelWrapped));
   exports.Set("startForegroundNotifications", Napi::Function::New(env, StartForegroundNotificationsWrapped));

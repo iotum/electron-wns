@@ -42,4 +42,12 @@ npm install
 npm run build
 ```
 
+`npm run build` compiles this addon against Electron `32.2.4` using `@electron/rebuild`.
+
+To build against plain Node.js headers instead, run:
+
+```powershell
+npm run build:node
+```
+
 > Note: WNS channel creation requires the app to have valid Windows app identity and WNS-capable packaging/registration.

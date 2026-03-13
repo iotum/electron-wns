@@ -1,5 +1,9 @@
-const binding = require('bindings')('electron_wns');
+const path = require('path');
 
+const addonPath = path.join(__dirname, 'build', 'Release', 'electron_wns.node');
+const binding = require(addonPath);
+
+console.log('==> index.js binding.getChannel: ', typeof binding.getChannel);
 module.exports = {
   getChannel: binding.getChannel,
   startForegroundNotifications: binding.startForegroundNotifications,
