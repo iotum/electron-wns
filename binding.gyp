@@ -3,7 +3,7 @@
     {
       "target_name": "electron_wns",
       "sources": [
-        "src/addon.cpp"
+        "src/electron_wns.cpp"
       ],
       "include_dirs": [
         "<!@(node -p \"require('node-addon-api').include\")"
