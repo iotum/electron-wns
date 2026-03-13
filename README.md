@@ -1,11 +1,10 @@
 # electron-wns
 
-Node native addon that allows you to receive push messages from Windows Push Notifications Services (WNS), in Electron (and node).
+Node native addon that allows an electron/node app to receive push messages from Windows Push Notifications Services (WNS).
 
-- Currently in an initial state of development, but so far I have been able to successfully
+- In an early phase of development, but so far I have been able to successfully
 use this library to obtain a channel URI (with an included token), that could be used to send WNS
 push messages to.
-
 - Tested with Electron 32.2.4, but probably will work with most modern versions of electron (and node)
 - Tested by launching in a packaged, and code signed context via a .MSIX installer (see https://www.electronforge.io/config/makers/msix)
 
@@ -74,7 +73,7 @@ export default Assets;
 
 ## Exposed API of electron_wns.node:
 
-### getChannel
+### getChannel()
 Call this to get a channel URI, that you can then send to your backend, and use to push messages to the user:
 ```
 getChannel(): Promise<{ uri: string; expirationTicks: number }>
@@ -84,7 +83,7 @@ Returns an object with:
 - uri: string usually of the form: https://wns2-bl2p.notify.windows.com/?token=<STRING>
 - expirationTicks: integer number of ticks since the epock, indicating when this channel expires.
 
-### startForegroundNotifications
+### startForegroundNotifications()
 Starts listening for foreground notifications (notifications while the app is running).
 The callback function will be invoked by the library passing the received notification object.
 
@@ -101,7 +100,7 @@ The notification object will have the following structure:
 }
 ```
 
-### stopForegroundNotifications
+### stopForegroundNotifications()
 ```
 stopForegroundNotifications(): void
 ```
