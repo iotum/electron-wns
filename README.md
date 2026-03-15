@@ -1,33 +1,51 @@
 # electron-wns
 
-Node native addon that allows an electron/node app to receive push messages from Windows Push Notifications Services (WNS).
+Simple light-weight library for using Windows Push Notifications Services (WNS) in your electron app.
 
-- In an early phase of development, but so far I have been able to successfully
-use this library to obtain a channel URI (with an included token), that could be used to send WNS
-push messages to.
-- Tested with Electron 32.2.4, but probably will work with most modern versions of electron (and node)
-- Tested by launching in a packaged, and code signed context via a .MSIX installer (see https://www.electronforge.io/config/makers/msix)
+This npm package exports an index.js file which simply wraps using a node native extension (electron_wns.node), that is built automatically on npm installing this library.
 
-- Library is actively being improved!
+The .node file, written in C++, uses the Component Object Model (COM) to interface with the Windows.Networking.PushNotifications
+Windows Runtime (WinRT) APIs to register your app obtaining a "channel URI" (which includes a device token), that can be used by your backend to push messages to your windows electron app. It also allows you to register a javascript function that is called back
+by the library when a push message is received.
+
+Currently tested in Electron 32.2.4, and by using electron-forge to build a code-signed .MSXI installer.
+
+IMPORTANT:
+
+This lib is designed to be used in a packaged context (via a appX package / MSIX installer).
+(see https://www.electronforge.io/config/makers/msix)
 
 ## USAGE
 
-### Automatic rebuild on install
+### Method 1: npm install + use the javascript wrapper
+1. In your electron project, npm install --save electron-wns
+2. Conditionally require/import electron-wns (so that you only attempt to load it on windows)
 
-When installed into an Electron app, `electron-wns` now runs a `postinstall` hook that attempts:
+```
+import os from 'os';
 
+if (os.platform() === 'win32') {
+  const runtimeRequire = typeof __non_webpack_require__ === 'function' ? __non_webpack_require__ : require;
+  const electronWNS = runtimeRequire('electron-wns').default;
+}
+```
+
+NOTE: this npm package has a postinstall hook which will build the node addon used internally in this library (electron_wns.nod).
+It is designed to build against the version of electron/node you are using. When not run on windows, it will exit avoiding building the .node file.
+
+This is the equivalent of running this command in your project folder after npm installing this lib: 
 ```
 electron-rebuild -f -w electron-wns
 ```
 
-from the consumer project root (via `INIT_CWD`).
-
-If Electron is not present in the consumer project, the hook exits without rebuilding.
+### Method 2: Manaully build and include the node addon
+Alernatively you can simply manually build the electron_wns.node file, package it up with your electron app and require() it in the
+javascripts of your main process.
 
 1. Clone this repo
 2. npm install
-3. npm run build (Electron version is auto-detected from your app's package.json)
-4. Copy the built electron_wns.node into your electron project.
+3. npx electron-rebuild -f -v 32.2.4  (for Electron 32.2.4, elsewise replace with the version of electron you'll be using)
+4. Copy build/release/electron_wns.rb into your project (eg. assets/win32/wns/electron_wns.node)
 5. Ensure that it is packaged up with the app. For electron packager / forge, you may need to adjust packager config:
 
 Example:
@@ -62,7 +80,7 @@ class Assets {
 export default Assets;
 ```
 
-- require() the .node file to use it in the javascripts of your main process like so:
+6. require() the .node file to use it in the javascripts of your main process like so:
 ```
   const assetsURL = Assets.getURL();
   const addonPath = path.join(assetsURL, 'win32', 'wns', 'electron_wns.node');
@@ -84,6 +102,8 @@ export default Assets;
 ```
 
 ## Exposed API of electron_wns.node:
+This npm package contains a small JS wrapper that just exports the functions of electron_wns.node.
+Thus the API to this package, and the electron_wns.node file is the same, and is as follows:
 
 ### getChannel()
 Call this to get a channel URI, that you can then send to your backend, and use to push messages to the user:
@@ -116,10 +136,6 @@ The notification object will have the following structure:
 ```
 stopForegroundNotifications(): void
 ```
-
-## TO COME:
-- Improving the way the library is integrated into your app - so that you can npm install, and access via a javascript wrapper
-- Typescript types/etc.
 
 ## An Alternative Library:
 - There is the NodeRT project: https://github.com/NodeRT/NodeRT
