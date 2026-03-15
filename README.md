@@ -54,7 +54,7 @@ Example:
 ```
   packagerConfig: {
     extraResource: [
-      `./assets/${process.platform}`
+      `./assets/${process.platform}` // This will only package up the assets/win32 folder, when building for/on windows
     ]
   }
 ```
@@ -101,7 +101,7 @@ export default Assets;
   electronWNS.stopForegroundNotifications();
 ```
 
-## Exposed API of electron_wns.node:
+## Library API:
 This npm package contains a small JS wrapper that just exports the functions of electron_wns.node.
 Thus the API to this package, and the electron_wns.node file is the same, and is as follows:
 
