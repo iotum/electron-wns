@@ -12,6 +12,18 @@ push messages to.
 
 ## USAGE
 
+### Automatic rebuild on install
+
+When installed into an Electron app, `electron-wns` now runs a `postinstall` hook that attempts:
+
+```
+electron-rebuild -f -w electron-wns
+```
+
+from the consumer project root (via `INIT_CWD`).
+
+If Electron is not present in the consumer project, the hook exits without rebuilding.
+
 1. Clone this repo
 2. npm install
 3. npm run build (Electron version is auto-detected from your app's package.json)

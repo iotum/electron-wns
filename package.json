@@ -1,12 +1,13 @@
 {
   "name": "electron-wns",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Native Node addon for WNS channel creation and foreground notification listening",
   "main": "index.js",
   "types": "types.d.ts",
   "scripts": {
     "clean": "node-gyp clean",
-    "build": "node-gyp configure && node-gyp build"
+    "build": "node-gyp configure && node-gyp build",
+    "postinstall": "node scripts/auto-rebuild.js"
   },
   "keywords": [
     "electron",
