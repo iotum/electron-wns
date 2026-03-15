@@ -14,7 +14,7 @@ push messages to.
 
 1. Clone this repo
 2. npm install
-3. npm run build (change the Electron version in package.json to match the version of electron your working with)
+3. npm run build (Electron version is auto-detected from your app's package.json)
 4. Copy the built electron_wns.node into your electron project.
 5. Ensure that it is packaged up with the app. For electron packager / forge, you may need to adjust packager config:
 
@@ -107,7 +107,6 @@ stopForegroundNotifications(): void
 
 ## TO COME:
 - Improving the way the library is integrated into your app - so that you can npm install, and access via a javascript wrapper
-- electron rebuild support that automatically would detect your version of electron (electron rebuild)
 - Typescript types/etc.
 
 ## An Alternative Library:
