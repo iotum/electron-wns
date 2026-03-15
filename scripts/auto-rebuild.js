@@ -6,6 +6,11 @@ const log = (...args) => console.log('[electron-wns postinstall]', ...args);
 
 const appRoot = process.env.INIT_CWD;
 
+if (process.platform !== 'win32') {
+  log(`Skipping rebuild: host platform ${process.platform} is not Windows.`);
+  process.exit(0);
+}
+
 if (!appRoot || !fs.existsSync(path.join(appRoot, 'package.json'))) {
   log('Skipping rebuild: INIT_CWD is missing or invalid.');
   process.exit(0);
