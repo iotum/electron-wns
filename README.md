@@ -137,6 +137,13 @@ The notification object will have the following structure:
 stopForegroundNotifications(): void
 ```
 
+## Included: A Powershell Script to Test Pushing Messages
+You can run the powershell script (.ps1) file included in this repo to test sending push messages to your app.
+
+```
+powershell.exe .\send_wns_message.ps1 --sid <Secure Package SID> --secret <SECRET> --channel <CHANNEL_URI> --type raw --payload "hello world"
+```
+
 ## An Alternative Library:
 - There is the NodeRT project: https://github.com/NodeRT/NodeRT
 - But that is currently very outdated and does not compile against more modern versions of node/electron
