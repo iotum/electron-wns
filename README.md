@@ -137,7 +137,7 @@ The notification object will have the following structure:
 electronWNS.stopForegroundNotifications(): void
 ```
 
-## Included: A Powershell Script to Test Pushing Messages
+## Test Sending Push Messages
 You can run the powershell script (.ps1) file included in this repo to test sending push messages to your app.
 
 ```
