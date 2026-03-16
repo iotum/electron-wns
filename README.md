@@ -1,13 +1,5 @@
 <!-- PROJECT SHIELDS -->
-
 ![NPM Version](https://img.shields.io/npm/v/electron-wns?style=for-the-badge)
-
-[![MIT License][license-shield]][license-url]
-
-[![Stargazers][stars-shield]][stars-url]
-
-[![Forks][forks-shield]][forks-url]
-
 ![NPM Downloads](https://img.shields.io/npm/dm/electron-wns?style=for-the-badge)
 
 
