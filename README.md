@@ -108,7 +108,7 @@ Thus the API to this package, and the electron_wns.node file is the same, and is
 ### getChannel()
 Call this to get a channel URI, that you can then send to your backend, and use to push messages to the user:
 ```
-getChannel(): Promise<{ uri: string; expirationTicks: number }>
+electronWNS.getChannel(): Promise<{ uri: string; expirationTicks: number }>
 ```
 
 Returns an object with:
@@ -120,7 +120,7 @@ Starts listening for foreground notifications (notifications while the app is ru
 The callback function will be invoked by the library passing the received notification object.
 
 ```
-startForegroundNotifications(callback: (notification) => void): void
+electronWNS.startForegroundNotifications(callback: (notification) => void): void
 ```
 
 The notification object will have the following structure:
@@ -134,7 +134,7 @@ The notification object will have the following structure:
 
 ### stopForegroundNotifications()
 ```
-stopForegroundNotifications(): void
+electronWNS.stopForegroundNotifications(): void
 ```
 
 ## Included: A Powershell Script to Test Pushing Messages
