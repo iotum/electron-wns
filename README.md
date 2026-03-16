@@ -12,7 +12,7 @@ Currently tested in Electron 32.2.4, and by using electron-forge to build a code
 
 IMPORTANT:
 
-This lib is designed to be used in a packaged context (via a appX package / MSIX installer).
+This lib is designed to be used in a packaged context (via an appX package / MSIX installer).
 (see https://www.electronforge.io/config/makers/msix)
 
 ## USAGE
@@ -38,7 +38,7 @@ This is the equivalent of running this command in your project folder after npm 
 electron-rebuild -f -w electron-wns
 ```
 
-### Method 2: Manaully build and include the node addon
+### Method 2: Manually build and include the node addon
 Alernatively you can simply manually build the electron_wns.node file, package it up with your electron app and require() it in the
 javascripts of your main process.
 
