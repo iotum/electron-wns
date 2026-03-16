@@ -154,7 +154,7 @@ electronWNS.stopForegroundNotifications(): void
 You can run the powershell script (.ps1) file included in this repo to test sending push messages to your app.
 
 ```
-powershell.exe .\send_wns_message.ps1 --sid <Secure Package SID> --secret <SECRET> --channel <CHANNEL_URI> --type raw --payload "hello world"
+powershell.exe .\send_wns_message.ps1 -ClientId "AZURE_CLIENT_ID" -TenantId "AZURE_TENNANT_ID" -Secret "AZURE_APP_REG_CLIENT_SECRET_VALUE" -Channel "https://wns2-bl2p.notify.windows.com/?token=BLAHBLAH" -Message "hello_world"
 ```
 
 ## An Alternative Library:
