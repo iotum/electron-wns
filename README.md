@@ -22,8 +22,11 @@ This lib is designed to be used in a packaged context (via an appX package / MSI
 
 ## USAGE
 
-### Method 1: npm install + use the javascript wrapper
-1. In your electron project, npm install --save electron-wns
+### Method 1: npm install
+1. In your electron project, run:
+```
+npm install --save electron-wns
+```
 2. Conditionally require/import electron-wns (so that you only attempt to load it on windows)
 
 ```
@@ -32,6 +35,13 @@ import os from 'os';
 if (os.platform() === 'win32') {
   const runtimeRequire = typeof __non_webpack_require__ === 'function' ? __non_webpack_require__ : require;
   const electronWNS = runtimeRequire('electron-wns').default;
+
+  const channel = await electronWNS.getChannel();
+  console.log('WNS channel URI:', channel.uri); // Your backend can use this to send to this device
+
+  electronWNS.startForegroundNotifications((notification) => {
+    console.log('Foreground WNS notification:', notification);
+  });
 }
 ```
 
@@ -102,8 +112,6 @@ export default Assets;
   electronWNS.startForegroundNotifications((notification) => {
     console.log('Foreground WNS notification:', notification);
   });
-
-  electronWNS.stopForegroundNotifications();
 ```
 
 ## Library API:
