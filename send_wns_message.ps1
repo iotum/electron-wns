@@ -18,7 +18,7 @@ param(
 
     [int]$TimeoutSec = 20,
 
-    [int]$Ttl,
+    [int]$Ttl = 300,
 
     [ValidateSet('cache', 'no-cache')]
     [string]$CachePolicy
@@ -88,7 +88,8 @@ function Send-WnsRawPush {
         [Parameter(Mandatory = $true)]
         [int]$Timeout,
 
-        [Nullable[int]]$TimeToLive,
+        [Parameter(Mandatory = $true)]
+        [int]$TimeToLive,
 
         [string]$WnsCachePolicy
     )
@@ -107,9 +108,7 @@ function Send-WnsRawPush {
         'Content-Type'        = 'application/octet-stream'
     }
 
-    if ($null -ne $TimeToLive) {
-        $headers['X-WNS-TTL'] = [string]$TimeToLive
-    }
+    $headers['X-WNS-TTL'] = [string]$TimeToLive
 
     if ($WnsCachePolicy) {
         $headers['X-WNS-Cache-Policy'] = $WnsCachePolicy
