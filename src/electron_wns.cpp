@@ -29,42 +29,6 @@ std::string ToUtf8(std::wstring const& input);
 std::string ToUtf8(winrt::hstring const& input);
 PushNotificationChannel GetOrCreateChannel();
 
-class GetChannelWorker : public Napi::AsyncWorker {
- public:
-  GetChannelWorker(const Napi::Env& env, Napi::Promise::Deferred deferred)
-      : Napi::AsyncWorker(env), deferred_(deferred) {}
-
-  ~GetChannelWorker() override = default;
-
-  void Execute() override {
-    try {
-      auto channel = GetOrCreateChannel();
-      uri_ = ToUtf8(channel.Uri());
-
-      const auto expiration = channel.ExpirationTime();
-      expirationTicks_ = expiration.time_since_epoch().count();
-    } catch (const winrt::hresult_error& error) {
-      SetError(ToUtf8(error.message()));
-    } catch (const std::exception& error) {
-      SetError(error.what());
-    }
-  }
-
-  void OnOK() override {
-    Napi::Object result = Napi::Object::New(Env());
-    result.Set("uri", uri_);
-    result.Set("expirationTicks", Napi::Number::New(Env(), static_cast<double>(expirationTicks_)));
-    deferred_.Resolve(result);
-  }
-
-  void OnError(const Napi::Error& error) override { deferred_.Reject(error.Value()); }
-
- private:
-  Napi::Promise::Deferred deferred_;
-  std::string uri_;
-  int64_t expirationTicks_ = 0;
-};
-
 void EnsureApartmentInitialized() {
   std::call_once(g_apartmentInitFlag, []() {
     try {
@@ -124,8 +88,21 @@ Napi::Value GetChannelWrapped(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   auto deferred = Napi::Promise::Deferred::New(env);
 
-  auto* worker = new GetChannelWorker(env, deferred);
-  worker->Queue();
+  try {
+    auto channel = GetOrCreateChannel();
+    Napi::Object result = Napi::Object::New(env);
+    result.Set("uri", ToUtf8(channel.Uri()));
+
+    const auto expiration = channel.ExpirationTime();
+    const auto expirationTicks = expiration.time_since_epoch().count();
+    result.Set("expirationTicks", Napi::Number::New(env, static_cast<double>(expirationTicks)));
+
+    deferred.Resolve(result);
+  } catch (const winrt::hresult_error& error) {
+    deferred.Reject(Napi::Error::New(env, ToUtf8(error.message())).Value());
+  } catch (const std::exception& error) {
+    deferred.Reject(Napi::Error::New(env, error.what()).Value());
+  }
 
   return deferred.Promise();
 }
