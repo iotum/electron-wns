@@ -59,3 +59,43 @@ export function startForegroundNotifications(
  * notifications. Has no effect if notifications were not started.
  */
 export function stopForegroundNotifications(): void;
+
+/**
+ * Returns whether WinAppSDK push notifications are available in the current runtime.
+ * This is useful for determining whether unpackaged push APIs can be used.
+ */
+export function isWinAppSdkPushSupported(): boolean;
+
+/**
+ * Runtime diagnostics for deciding whether WinAppSDK push path can be used.
+ */
+export interface WinAppSdkPushDiagnostics {
+  compiledWithWinAppSdkHeaders: boolean;
+  isSupported: boolean;
+  errorCode: number;
+  errorMessage: string;
+}
+
+/**
+ * Returns WinAppSDK push runtime diagnostics and any captured support error.
+ */
+export function getWinAppSdkPushDiagnostics(): WinAppSdkPushDiagnostics;
+
+/**
+ * Registers the process with PushNotificationManager and enables foreground
+ * delivery for push notifications handled by WinAppSDK.
+ */
+export function registerPush(): void;
+
+/**
+ * Unregisters the process from PushNotificationManager.
+ */
+export function unregisterPush(): void;
+
+/**
+ * Requests a WNS channel URI via WinAppSDK PushNotificationManager using a
+ * remoteId GUID string.
+ *
+ * @param remoteId - GUID string used when creating the channel.
+ */
+export function getChannelForPushManager(remoteId: string): Promise<WnsChannel>;

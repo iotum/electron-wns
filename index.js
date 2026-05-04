@@ -8,4 +8,9 @@ module.exports = {
   getChannel: binding.getChannel,
   startForegroundNotifications: binding.startForegroundNotifications,
   stopForegroundNotifications: binding.stopForegroundNotifications,
+  isWinAppSdkPushSupported: binding.isWinAppSdkPushSupported,
+  getWinAppSdkPushDiagnostics: binding.getWinAppSdkPushDiagnostics,
+  registerPush: binding.registerPush,
+  unregisterPush: binding.unregisterPush,
+  getChannelForPushManager: binding.getChannelForPushManager,
 };

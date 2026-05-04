@@ -150,6 +150,35 @@ The notification object will have the following structure:
 electronWNS.stopForegroundNotifications(): void
 ```
 
+### isWinAppSdkPushSupported()
+Use this to detect whether WinAppSDK push APIs are available in the current runtime.
+
+```
+electronWNS.isWinAppSdkPushSupported(): boolean
+```
+
+### registerPush()
+Registers the app process with WinAppSDK PushNotificationManager and enables
+foreground push callbacks for that registration model.
+
+```
+electronWNS.registerPush(): void
+```
+
+### unregisterPush()
+Unregisters from WinAppSDK PushNotificationManager.
+
+```
+electronWNS.unregisterPush(): void
+```
+
+### getChannelForPushManager(remoteId)
+Requests a channel URI through WinAppSDK PushNotificationManager using a remoteId GUID string.
+
+```
+electronWNS.getChannelForPushManager(remoteId: string): Promise<{ uri: string; expirationTicks: number }>
+```
+
 ## Test Sending Push Messages
 You can run the powershell script (.ps1) file included in this repo to test sending push messages to your app.
 
